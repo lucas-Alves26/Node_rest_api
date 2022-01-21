@@ -1,0 +1,27 @@
+{
+  "name": "projetorest",
+  "version": "1.0.0",
+  "description": "Projeto utilizando chamada rest e banco de dados mysql",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucas-Alves26/Node_rest_api.git"
+  },
+  "author": "Lucas Alves de Abreu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucas-Alves26/Node_rest_api/issues"
+  },
+  "homepage": "https://github.com/lucas-Alves26/Node_rest_api#readme",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "consign": "^0.1.6",
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15",
+    "save-dev": "0.0.1-security"
+  }
+}
