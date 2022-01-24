@@ -1,14 +1,59 @@
+const moment = require("moment");
 const conexao = require("../infraestrutura/conexao");
 
 class Atendimento {
-  adiciona(atendimento) {
-    const sql = "INSERT INTO Atendimentos SET ?";
+  adiciona(atendimento, res) {
+    const data_cadastro = moment().format("YYYY-MM-DD HH:MM:SS");
+    const data = moment(atendimento.data, "DD/MM/YYYY").format(
+      "YYYY-MM-DD HH:MM:SS"
+    );
 
-    conexao.query(sql, atendimento, (erro, resultados) => {
+    console.log(data_cadastro);
+    console.log(data);
+
+    const dataValida = moment(data).isSameOrAfter(data_cadastro); //verifica se a data  é menor que a data_cadastro
+    const clienteValido = atendimento.cliente.length >= 5;
+
+    const validacoes = [
+      {
+        nome: "data",
+        valido: dataValida,
+        mensagem: "Data deve ser maior ou igual a data atual",
+      },
+      {
+        nome: "cliente",
+        valido: clienteValido,
+        mensagem: "Cliente deve ter pelo menos cinco caracters",
+      },
+    ];
+
+    const erros = validacoes.filter((campo) => !campo.valido);
+    const existemErros = erros.length;
+
+    if (existemErros) {
+      res.status(400).json(erros);
+    } else {
+      const atendimentoDatado = { ...atendimento, data_cadastro, data };
+
+      const sql = "INSERT INTO Atendimentos SET ?";
+
+      conexao.query(sql, atendimentoDatado, (erro, resultados) => {
+        if (erro) {
+          res.status(400).json(erro);
+        } else {
+          res.status(201).json(resultados);
+        }
+      });
+    }
+  }
+
+  lista(res) {
+    const sql = "SELECT * FROM atendimentos";
+    conexao.query(sql, (erro, resultados) => {
       if (erro) {
-        console.log("Erro ao salvar atendimento, " + erro);
+        res.status(400).json(erro);
       } else {
-        console.log("Atendimento salvo com sucesso, " + resultados);
+        res.status(200).json(resultados);
       }
     });
   }

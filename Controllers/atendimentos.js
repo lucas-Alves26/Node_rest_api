@@ -7,8 +7,7 @@ module.exports = (app) => {
   );
 
   app.post("/atendimentos", (req, res) => {
-    const dadosAtendimento = req.body;
-    Atendimento.adiciona(dadosAtendimento);
-    res.send("Post sucesso");
+    const corpoAtendimento = req.body;
+    Atendimento.adiciona(corpoAtendimento, res);
   });
 };
