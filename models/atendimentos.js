@@ -9,9 +9,6 @@ class Atendimento {
       "YYYY-MM-DD HH:MM:SS"
     );
 
-    console.log(data_cadastro);
-    console.log(data);
-
     const dataValida = moment(data).isSameOrAfter(data_cadastro); //verifica se a data  é menor que a data_cadastro
     const clienteValido = atendimento.cliente.length >= 5;
 
